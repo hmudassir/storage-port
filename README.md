@@ -2,6 +2,8 @@
 
 The application talks to object storage through a small **port**. This sample ships an in-memory adapter. A production adapter would implement the same two methods against a bucket. The upload flow does not change.
 
+The port, the two object keys, and the complete rules are in [docs/architecture.md](docs/architecture.md).
+
 1. `POST /api/uploads` records a pending upload and returns a one-time token. The token is stored only as a SHA-256 hash.
 2. `PUT /api/uploads/{id}/content` writes the bytes to `staging/{id}` through the port.
 3. `POST /api/uploads/{id}/complete` reads staging once, checks the size, and writes `private/{id}`.
